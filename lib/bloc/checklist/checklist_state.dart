@@ -12,7 +12,7 @@ abstract class ChecklistState extends Equatable {
 class ChecklistInitial extends ChecklistState {}
 
 class ChecklistsLoaded extends ChecklistState {
-  final List<dynamic> checkLists;
+  final List<EmployeeCheckListSite> checkLists;
 
   ChecklistsLoaded(this.checkLists);
 
@@ -32,18 +32,3 @@ class ChecklistsLoadFailure extends ChecklistState {
   @override
   String toString() => 'ChecklistsLoadFailure';
 }
-/*class AuthenticationSuccessEmployee extends AuthenticationState {
-  final String displayName;
-
-  AuthenticationSuccessEmployee(this.displayName);
-
-  @override
-  List<Object> get props => [displayName];
-
-  @override
-  String toString() => 'Authenticated Employee { displayName: $displayName }';
-}
-class AuthenticationFailure extends AuthenticationState {
-  @override
-  String toString() => 'AuthenticationFailure';
-}*/

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:bloctest/providers/database_client.dart';
 
 import 'package:bloctest/screens/splash_screen.dart';
-import 'package:bloctest/screens/checklist_screen.dart';
+import 'package:bloctest/screens/checklist_screen2.dart';
 import 'package:bloctest/screens/add_employee_checklist3.dart';
 
 class MainUserScreen extends StatelessWidget {

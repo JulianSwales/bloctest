@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:grouped_buttons/grouped_buttons.dart';
 
 import 'package:bloctest/bloc/checklist/checklist_bloc.dart';
@@ -20,12 +19,10 @@ class AddEmployeeChecklistScreen extends StatefulWidget {
 class _AddEmployeeChecklistScreenState
     extends State<AddEmployeeChecklistScreen> {
   final dennyDb = DatabaseClient.instance;
-  int jobSiteValue = null;
-  //String jobSiteKnackId = null;
-  int equipmentValue = null;
-  String typeValue = null;
-  //String equipmentKnackId = null;
-  int prevequipmentValue = null;
+  int jobSiteValue;
+  int equipmentValue;
+  String typeValue;
+  int prevequipmentValue;
   bool haveEquipment = false;
   bool haveType = false;
   DateTime dateValue = DateTime.now();
@@ -40,14 +37,13 @@ class _AddEmployeeChecklistScreenState
     list = [];
     final data = await dennyDb.getEquipmentCheckLists(equipmentValue);
 
-    //print('_getEqupData is: ${data[0]}');
+
     data.forEach((f) {
       print('f.id is: ${f.id}');
-      //if(list.where((e) => e.id == f.id)) {}
       list.add(ListItem<dynamic>(f));
     });
     prevequipmentValue = equipmentValue;
-    //print('list is now: ${list[0].data.id}');
+
     return list;
   }
 
@@ -86,16 +82,11 @@ class _AddEmployeeChecklistScreenState
     if (!invaliddata) {
       print('Now Adding Records');
       print('jobSiteValue: ${jobSiteValue}');
-      //dennyDb.addEmployeeSafetyRecord(
-      //    jobSiteValue, equipmentValue, dateValue, list);
-
-      //Navigator.of(context).pushNamed(MainUserScreen.routeName);
       BlocProvider.of<ChecklistBloc>(context).add(AddChecklist(jobSiteValue, equipmentValue, dateValue, list));
       Navigator.pop(context);
     }
-    //print('list: ${list}'),
   }
-  //List<TextEditingController> _controllers = new List();
+
 
   @override
   void initState() {

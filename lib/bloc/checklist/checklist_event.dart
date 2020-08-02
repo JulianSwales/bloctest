@@ -13,11 +13,10 @@ class LoadChecklists extends ChecklistEvent {
 
 class AddChecklist extends ChecklistEvent {
   final int jobSiteValue;
-
   final int equipmentValue;
-
   final DateTime dateValue;
   final List list;
+  
   AddChecklist(
       this.jobSiteValue, this.equipmentValue, this.dateValue, this.list);
   @override
@@ -28,20 +27,10 @@ class AddChecklist extends ChecklistEvent {
 }
 
 class ChecklistsUpdated extends ChecklistEvent {
-  final List<dynamic> checklists;
+  final List<EmployeeCheckListSite> checklists;
 
   ChecklistsUpdated(this.checklists);
 
   @override
   List<Object> get props => [checklists];
 }
-
-/*class AuthenticationLoggedIn extends AuthenticationEvent {
-  @override
-  String toString() => 'LoggedIn';
-}
-
-class AuthenticationLoggedOut extends AuthenticationEvent {
-  @override
-  String toString() => 'LoggedOut';
-}*/

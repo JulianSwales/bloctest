@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import 'package:bloctest/class/checklist_repository.dart';
+
+import 'package:bloctest/models/employee_checklist_bloc.dart';
 
 part 'checklist_event.dart';
 part 'checklist_state.dart';
@@ -40,6 +43,7 @@ class ChecklistBloc extends Bloc<ChecklistEvent, ChecklistState> {
   }
 
   Stream<ChecklistState> _mapAddChecklistToState(AddChecklist event) async* {
+    print('Bloc: _mapAddChecklistToState');
     await _checklistRepository.addNewChecklist(
         event.jobSiteValue, event.equipmentValue, event.dateValue, event.list);
   }

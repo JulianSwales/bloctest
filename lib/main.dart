@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bloctest/screens/main_user_screen.dart';
-import 'package:bloctest/screens/splash_screen.dart';
 import 'package:bloctest/screens/employee_checklist_screen.dart';
-import 'package:bloctest/screens/checklist_screen.dart';
+import 'package:bloctest/screens/checklist_screen2.dart';
 import 'package:bloctest/screens/add_employee_checklist3.dart';
 
 import 'package:bloctest/bloc/checklist/checklist_bloc.dart';
-
-import 'package:bloctest/class/simple_bloc_delegate.dart';
 
 import 'package:bloctest/class/checklist_repository.dart';
 

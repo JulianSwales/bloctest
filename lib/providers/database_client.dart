@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bloctest/models/employee_checklist_bloc.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -149,7 +150,7 @@ create table _safety_record (
     initialScript.forEach(
       (script) async => await db.execute(script),
     );
-    _createData();
+    await _createData();
   }
 
   Future _createData() async {
@@ -744,14 +745,24 @@ create table _safety_record (
     return res;
   }
 
-  Future<List<dynamic>> getUserAllEmployeeChecklistInfo() async {
+  Future<List<EmployeeCheckListSite>> getUserAllEmployeeChecklistInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final _currentUser = prefs.getString('current_user');
     final userInfo = await queryUser(_currentUser);
     final db = await instance.database;
     final res = await db.rawQuery(
         'SELECT t1.id as id, t1.knackId as knackId, (SELECT customerSite from _job_site t2 where t1.jobSiteId = t2.id) as customerSite, (SELECT unitNoWithName from _equipment t3 where t1.equipmentId = t3.id) as unitNoWithName, t1.workDate as workDate from _employee_checklist t1 where employeeKnackId = "${userInfo.knackId}" order by workDate DESC');
-    return res;
+    var _abc = <EmployeeCheckListSite>[];
+    res.forEach((element) {
+      final _js = EmployeeCheckListSite(element['id'], element['knackId'], element['customerSite'],element['unitNowithName'],DateTime.parse(element['workDate']));
+      /*_js.customerSite = element['customerSite'];
+      _js.id = element['id'];
+      _js.knackId = element['knackId'];
+      _js.unitNoWithName = element['unitNowithName'];
+      _js.workDate = DateTime.parse(element['workDate']);*/
+      _abc.add(_js);
+    });
+    return _abc;
   }
 
   Future<List<dynamic>> getDropDownJobSiteInfo() async {
