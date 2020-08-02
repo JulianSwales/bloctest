@@ -755,11 +755,6 @@ create table _safety_record (
     var _abc = <EmployeeCheckListSite>[];
     res.forEach((element) {
       final _js = EmployeeCheckListSite(element['id'], element['knackId'], element['customerSite'],element['unitNowithName'],DateTime.parse(element['workDate']));
-      /*_js.customerSite = element['customerSite'];
-      _js.id = element['id'];
-      _js.knackId = element['knackId'];
-      _js.unitNoWithName = element['unitNowithName'];
-      _js.workDate = DateTime.parse(element['workDate']);*/
       _abc.add(_js);
     });
     return _abc;

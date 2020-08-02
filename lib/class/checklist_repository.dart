@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:bloctest/providers/database_client.dart';
+import 'package:bloctest/models/employee_checklist_bloc.dart';
 
 class ChecklistRepository {
   final _dennyDb = DatabaseClient.instance;
 
   @override
-  Stream<List<dynamic>> checklists() {
+  Stream<List<EmployeeCheckListSite>> checklists() {
     print('ChecklistRepository: Stream: checklists');
     final res = _dennyDb.getUserAllEmployeeChecklistInfo();
     return Stream.fromFuture(res);
