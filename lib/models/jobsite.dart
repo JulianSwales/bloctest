@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 List<JobSite> jobSiteFromJson(String str) =>
     List<JobSite>.from(json.decode(str).map((x) => JobSite.fromJson(x)));
 
 String jobSiteToJson(List<JobSite> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class JobSite {
+class JobSite extends Equatable {
   int id;
   String jobSiteName;
   String customerSite;
@@ -32,6 +34,21 @@ class JobSite {
     this.localFileNameHospital,
     this.lastDocumentSync,
   });
+
+  @override
+  List get props => [
+        id,
+        jobSiteName,
+        customerSite,
+        active,
+        lastSync,
+        knackId,
+        fileUrlResponsePlan,
+        localFileNameResponsePlan,
+        fileUrlHospital,
+        localFileNameResponsePlan,
+        lastDocumentSync,
+      ];
 
   String get getCustomerSite => customerSite;
 

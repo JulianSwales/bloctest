@@ -2,24 +2,35 @@ import 'package:bloctest/providers/database_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:bloctest/screens/main_user_screen.dart';
-import 'package:bloctest/screens/employee_checklist_screen.dart';
-import 'package:bloctest/screens/checklist_screen2.dart';
-import 'package:bloctest/screens/add_employee_checklist3.dart';
+import 'package:bloctest/screens/main_foreman_screen.dart';
+import 'package:bloctest/screens/add_job_site_notes_screen.dart';
+import 'package:bloctest/screens/jobsite_notes_screen.dart';
 
-import 'package:bloctest/bloc/checklist/checklist_bloc.dart';
+import 'package:bloctest/bloc/jobsite/jobsite_bloc.dart';
+import 'package:bloctest/bloc/add_jobsite_note/add_jobsite_note_bloc.dart';
 
-import 'package:bloctest/class/checklist_repository.dart';
+import 'package:bloctest/class/simple_bloc_delegate.dart';
+import 'package:bloctest/class/data_repository.dart';
 
 void main() {
-  final checklistRepository = ChecklistRepository();
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = SimpleBlocObserver();
+  final dataRepository = DataRepository();
+
+  final _dennyDb = DatabaseClient.instance;
+  //_dennyDb.createData();
 
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<ChecklistBloc>(
+        BlocProvider<AddJobSiteNoteBloc>(
           create: (context) =>
-              ChecklistBloc(checklistRepository: checklistRepository),
+              AddJobSiteNoteBloc(dataRepository: dataRepository),
+        ),
+        BlocProvider<JobSiteBloc>(
+          create: (context) => JobSiteBloc(
+              dataRepository: dataRepository,
+              addJobSiteNoteBloc: BlocProvider.of<AddJobSiteNoteBloc>(context)),
         ),
       ],
       child: MyApp(),
@@ -33,6 +44,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //db.createData();
     db.queryAllUsers();
     return MaterialApp(
       title: 'Bloc Test',
@@ -41,13 +53,11 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.lightBlueAccent,
         fontFamily: 'Lato',
       ),
-      home: MainUserScreen(),
+      home: MainForemanScreen(),
       routes: {
-        MainUserScreen.routeName: (ctx) => MainUserScreen(),
-        EmployeeCheckListScreen.routeName: (ctx) => EmployeeCheckListScreen(),
-        CheckListScreen.routeName: (ctx) => CheckListScreen(),
-        AddEmployeeChecklistScreen.routeName: (ctx) =>
-            AddEmployeeChecklistScreen(),
+        MainForemanScreen.routeName: (ctx) => MainForemanScreen(),
+        JobSiteNotesScreen.routeName: (ctx) => JobSiteNotesScreen(),
+        AddJobSiteNoteScreen.routeName: (ctx) => AddJobSiteNoteScreen(),
       },
     );
   }
