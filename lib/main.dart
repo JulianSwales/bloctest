@@ -1,6 +1,8 @@
-import 'package:bloctest/providers/database_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:bloctest/providers/database_client.dart';
 
 import 'package:bloctest/screens/main_foreman_screen.dart';
 import 'package:bloctest/screens/add_job_site_notes_screen.dart';
@@ -16,9 +18,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = SimpleBlocObserver();
   final dataRepository = DataRepository();
-
-  final _dennyDb = DatabaseClient.instance;
-  //_dennyDb.createData();
+  _loadDb();
 
   runApp(
     MultiBlocProvider(
@@ -60,5 +60,15 @@ class MyApp extends StatelessWidget {
         AddJobSiteNoteScreen.routeName: (ctx) => AddJobSiteNoteScreen(),
       },
     );
+  }
+}
+
+Future<void> _loadDb() async {
+  final prefs = await SharedPreferences.getInstance();
+  final _dbCreateDone = prefs.getString('DbCreaeDone');
+  if (_dbCreateDone == null) {
+    final _dennyDb = DatabaseClient.instance;
+    _dennyDb.createData();
+    prefs.setString('DbCreaeDone', 'Done');
   }
 }

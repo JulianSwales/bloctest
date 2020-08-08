@@ -7,9 +7,7 @@ import 'package:bloctest/screens/jobsite_notes_screen.dart';
 
 class MainForemanScreen extends StatelessWidget {
   static const routeName = '/foreman';
-  //final authService = locator.get<Auth2>();
 
-  //final _currentUser = _getUser();
   @override
   Widget build(BuildContext context) {
     print('In MainForemanScreen');
